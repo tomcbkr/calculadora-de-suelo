@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora CBKR</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 20px;
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .result h3 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Sustrato CBKR</h1>
+
+  <label for="largo">Largo (cm)</label>
+  <input type="number" id="largo" placeholder="Ej: 40" />
+
+  <label for="ancho">Ancho (cm)</label>
+  <input type="number" id="ancho" placeholder="Ej: 30" />
+
+  <label for="alto">Alto (cm)</label>
+  <input type="number" id="alto" placeholder="Ej: 35" />
+
+  <label for="cantidad">Cantidad de macetas</label>
+  <input type="number" id="cantidad" placeholder="Ej: 5" />
+
+  <button onclick="calcular()">Calcular receta</button>
+
+  <div class="result" id="resultado"></div>
+
+  <script>
+    function calcular() {
+      const largo = parseFloat(document.getElementById('largo').value);
+      const ancho = parseFloat(document.getElementById('ancho').value);
+      const alto = parseFloat(document.getElementById('alto').value);
+      const cantidad = parseFloat(document.getElementById('cantidad').value);
+
+      if (isNaN(largo) || isNaN(ancho) || isNaN(alto) || isNaN(cantidad)) {
+        document.getElementById('resultado').innerHTML = '<p>Por favor completá todos los campos con números válidos.</p>';
+        return;
+      }
+
+      const volumenCm3 = largo * ancho * alto;
+      const litrosPorMaceta = volumenCm3 / 1000;
+      const litrosTotales = litrosPorMaceta * cantidad;
+
+      const coco = litrosTotales * 0.30;
+      const compost = litrosTotales * 0.30;
+      const humus = litrosTotales * 0.10;
+      const cascarilla = litrosTotales * 0.20;
+      const biochar = litrosTotales * 0.10;
+      const kashi = litrosTotales * 0.05;
+      const gypsum = (litrosTotales / 100) * 500;
+      const cover = (litrosTotales / 350) * 0.60;
+
+      document.getElementById('resultado').innerHTML = `
+        <h3>Resultado:</h3>
+        <p><strong>Total de litros:</strong> ${litrosTotales.toFixed(2)} L</p>
+        <ul>
+          <li>Fibra de coco (30%): ${coco.toFixed(2)} L</li>
+          <li>Compost Orgánico (30%): ${compost.toFixed(2)} L</li>
+          <li>Humus de lombriz (10%): ${humus.toFixed(2)} L</li>
+          <li>Cascarilla de arroz (20%): ${cascarilla.toFixed(2)} L</li>
+          <li>Biochar (10%): ${biochar.toFixed(2)} L</li>
+          <li>Kashi (5%): ${kashi.toFixed(2)} L</li>
+          <li>Gypsum: ${gypsum.toFixed(0)} g</li>
+          <li>Cover crop: ${cover.toFixed(2)} g</li>
+        </ul>
+      `;
+    }
+  </script>
+</body>
+</html>
